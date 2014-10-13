@@ -1,0 +1,266 @@
+diff -Naurp avr/lib/avrxmega4/Makefile.am avr/lib/avrxmega4/Makefile.am
+--- avr/lib/avrxmega4/Makefile.am	2011-12-29 00:52:16.000000000 -0800
++++ avr/lib/avrxmega4/Makefile.am	2014-02-10 23:59:00.000000000 -0800
+@@ -28,7 +28,7 @@
+ # POSSIBILITY OF SUCH DAMAGE.
+ #
+ 
+-SUBDIRS =  atxmega64a3 atxmega64d3
++SUBDIRS =  atxmega64a3 atxmega64d3 atxmega64d4
+ 
+ AVR_TARGET          = avrxmega4
+ AVR_TARGET_DEFS     = -D__COMPILING_AVR_LIBC__
+@@ -47,6 +47,9 @@ endif	# atxmega64a3
+ if HAS_atxmega64d3
+   AVRLIB_DEVLIST += atxmega64d3
+ endif	# atxmega64d3
++if HAS_atxmega64d4
++  AVRLIB_DEVLIST += atxmega64d4
++endif   # atxmega64d4
+ 
+ AM_CPPFLAGS = -I$(top_srcdir)/common -I$(top_srcdir)/include -I$(top_builddir)/include
+ 
+
+diff -Naurp avr/lib/avrxmega4/Makefile.in avr/lib/avrxmega4/Makefile.in
+--- avr/lib/avrxmega4/Makefile.in	2011-12-29 00:53:17.000000000 -0800
++++ avr/lib/avrxmega4/Makefile.in	2014-02-10 23:59:00.000000000 -0800
+@@ -433,6 +433,7 @@ build_triplet = @build@
+ host_triplet = @host@
+ @HAS_atxmega64a3_TRUE@@HAS_avrxmega4_TRUE@am__append_1 = atxmega64a3
+ @HAS_atxmega64d3_TRUE@@HAS_avrxmega4_TRUE@am__append_2 = atxmega64d3
++@HAS_atxmega64d4_TRUE@@HAS_avrxmega4_TRUE@am__append_3 = atxmega64d4
+ DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+ 	$(top_srcdir)/libc/misc/Files.am \
+ 	$(top_srcdir)/libc/misc/Rules.am \
+@@ -811,13 +812,13 @@ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-SUBDIRS = atxmega64a3 atxmega64d3
++SUBDIRS = atxmega64a3 atxmega64d3 atxmega64d4
+ AVR_TARGET = avrxmega4
+ AVR_TARGET_DEFS = -D__COMPILING_AVR_LIBC__
+ AVR_TARGET_CFLAGS = -Os $(FNO_JUMP_TABLES)
+ AVR_TARGET_ASFLAGS = 
+ AVR_INSTALL_DIR = avrxmega4
+-@HAS_avrxmega4_TRUE@AVRLIB_DEVLIST = $(am__append_1) $(am__append_2)
++@HAS_avrxmega4_TRUE@AVRLIB_DEVLIST = $(am__append_1) $(am__append_2) $(am__append_3)
+ @HAS_avrxmega4_TRUE@AM_CPPFLAGS = -I$(top_srcdir)/common -I$(top_srcdir)/include -I$(top_builddir)/include
+ @HAS_avrxmega4_TRUE@AVRLIB_CFLAGS = -g -Wall -W -Wstrict-prototypes -mmcu=$(AVR_TARGET) $(AVR_TARGET_DEFS) $(AVR_TARGET_CFLAGS)
+ @HAS_avrxmega4_TRUE@AVRLIB_ASFLAGS = -x assembler-with-cpp -Wa,-gstabs -mmcu=$(AVR_TARGET) $(AVR_TARGET_DEFS) $(AVR_TARGET_ASFLAGS)
+
+diff -Naurp devtools/gen-avr-lib-tree.sh devtools/gen-avr-lib-tree.sh
+--- devtools/gen-avr-lib-tree.sh	2011-12-29 00:51:50.000000000 -0800
++++ devtools/gen-avr-lib-tree.sh	2014-02-10 23:59:00.000000000 -0800
+@@ -269,7 +269,8 @@ atxmega32d4:crtx32d4.o:${DEV_DEFS}:${CFL
+ 
+ AVRXMEGA4_DEV_INFO="\
+ atxmega64a3:crtx64a3.o:${DEV_DEFS}:${CFLAGS_BIG_MEMORY}:${DEV_ASFLAGS};\
+-atxmega64d3:crtx64d3.o:${DEV_DEFS}:${CFLAGS_BIG_MEMORY}:${DEV_ASFLAGS}\
++atxmega64d3:crtx64d3.o:${DEV_DEFS}:${CFLAGS_BIG_MEMORY}:${DEV_ASFLAGS};\
++atxmega64d4:crtx64d4.o:${DEV_DEFS}:${CFLAGS_BIG_MEMORY}:${DEV_ASFLAGS}\
+ "
+ 
+ AVRXMEGA5_DEV_INFO="\
+
+diff -Naurp include/avr/eeprom.h include/avr/eeprom.h
+--- include/avr/eeprom.h	2011-12-29 00:51:50.000000000 -0800
++++ include/avr/eeprom.h	2014-02-10 23:59:00.000000000 -0800
+@@ -365,6 +365,8 @@
+ # define _EEPROM_SUFFIX   _x64a3
+ #elif defined (__AVR_ATxmega64D3__)
+ # define _EEPROM_SUFFIX   _x64d3
++#elif defined (__AVR_ATxmega64D4__)
++# define _EEPROM_SUFFIX   _x64d4
+ #elif defined (__AVR_ATxmega128A1__)
+ # define _EEPROM_SUFFIX   _x128a1
+ #elif defined (__AVR_ATxmega128A1U__)
+
+diff -Naurp include/avr/io.h include/avr/io.h
+--- include/avr/io.h	2011-12-29 00:51:50.000000000 -0800
++++ include/avr/io.h	2014-02-10 23:59:00.000000000 -0800
+@@ -390,6 +390,8 @@
+ #  include <avr/iox64a3.h>
+ #elif defined (__AVR_ATxmega64D3__)
+ #  include <avr/iox64d3.h>
++#elif defined (__AVR_ATxmega64D4__)
++#  include <avr/iox64d4.h>
+ #elif defined (__AVR_ATxmega128A1__)
+ #  include <avr/iox128a1.h>
+ #elif defined (__AVR_ATxmega128A1U__)
+
+diff -Naurp include/avr/power.h include/avr/power.h
+--- include/avr/power.h	2011-12-29 00:51:50.000000000 -0800
++++ include/avr/power.h	2014-02-10 23:59:00.000000000 -0800
+@@ -338,13 +338,13 @@ find out which macros are applicable to 
+   <tr>
+     <td>power_all_enable()</td>
+     <td>Enable all modules.</td>
+-    <td>ATxmega6A4, ATxmega32A4, ATxmega64A1, ATxmega64A1U, ATxmega64A3, ATxmegaA1, ATxmegaA1U, ATxmega128A3, ATxmega192A3, ATxmega256A3, ATxmegaA3B, ATxmega16D4, ATxmega32D4, ATxmega64D3, ATxmega128D3, ATxmega192D3, ATmega640, ATmega1280, ATmega1281, ATmega128RFA1, ATmega2560, ATmega2561, AT90USB646, AT90USB647, AT90USB1286, AT90USB1287, AT90PWM1, AT90PWM2, AT90PWM2B, AT90PWM3, AT90PWM3B, AT90PWM216, AT90PWM316, ATmega165, ATmega165P, ATmega325, ATmega325A, ATmega3250, ATmega325A, ATmega645, ATmega6450, ATmega169, ATmega169P, ATmega329, ATmega329A, ATmega3290, ATmega3290A, ATmega649, ATmega6490, ATmega164P, ATmega324P, ATmega644, ATmega406, ATmega48, ATmega88, ATmega168, ATtiny24, ATtiny44, ATtiny84, ATtiny84A, ATtiny25, ATtiny45, ATtiny85, ATtiny261, ATtiny461, ATtiny861</td>
++    <td>ATxmega6A4, ATxmega32A4, ATxmega64A1, ATxmega64A1U, ATxmega64A3, ATxmegaA1, ATxmegaA1U, ATxmega128A3, ATxmega192A3, ATxmega256A3, ATxmegaA3B, ATxmega16D4, ATxmega32D4, ATxmega64D3, ATxmega64D4, ATxmega128D3, ATxmega192D3, ATmega640, ATmega1280, ATmega1281, ATmega128RFA1, ATmega2560, ATmega2561, AT90USB646, AT90USB647, AT90USB1286, AT90USB1287, AT90PWM1, AT90PWM2, AT90PWM2B, AT90PWM3, AT90PWM3B, AT90PWM216, AT90PWM316, ATmega165, ATmega165P, ATmega325, ATmega325A, ATmega3250, ATmega325A, ATmega645, ATmega6450, ATmega169, ATmega169P, ATmega329, ATmega329A, ATmega3290, ATmega3290A, ATmega649, ATmega6490, ATmega164P, ATmega324P, ATmega644, ATmega406, ATmega48, ATmega88, ATmega168, ATtiny24, ATtiny44, ATtiny84, ATtiny84A, ATtiny25, ATtiny45, ATtiny85, ATtiny261, ATtiny461, ATtiny861</td>
+   </tr>
+ 
+   <tr>
+     <td>power_all_disable()</td>
+     <td>Disable all modules.</td>
+-    <td>ATxmega6A4, ATxmega32A4, ATxmega64A1, ATxmega64A1U, ATxmega64A3, ATxmegaA1, ATxmegaA1U, ATxmega128A3, ATxmega192A3, ATxmega256A3, ATxmegaA3B, ATxmega16D4, ATxmega32D4, ATxmega64D3, ATxmega128D3,ATxmega192D3, ATmega640, ATmega1280, ATmega1281, ATmega128RFA1, ATmega2560, ATmega2561, AT90USB646, AT90USB647, AT90USB1286, AT90USB1287, AT90PWM1, AT90PWM2, AT90PWM2B, AT90PWM3, AT90PWM3B, AT90PWM216, AT90PWM316, ATmega165, ATmega165P, ATmega325, ATmega325A, ATmega3250, ATmega325A, ATmega645, ATmega6450, ATmega169, ATmega169P, ATmega329, ATmega329A, ATmega3290, ATmega3290A, ATmega649, ATmega6490, ATmega164P, ATmega324P, ATmega644, ATmega406, ATmega48, ATmega88, ATmega168, ATtiny24, ATtiny44, ATtiny84, ATtiny84A, ATtiny25, ATtiny45, ATtiny85, ATtiny261, ATtiny461, ATtiny861</td>
++    <td>ATxmega6A4, ATxmega32A4, ATxmega64A1, ATxmega64A1U, ATxmega64A3, ATxmegaA1, ATxmegaA1U, ATxmega128A3, ATxmega192A3, ATxmega256A3, ATxmegaA3B, ATxmega16D4, ATxmega32D4, ATxmega64D3, ATxmega64D4, ATxmega128D3,ATxmega192D3, ATmega640, ATmega1280, ATmega1281, ATmega128RFA1, ATmega2560, ATmega2561, AT90USB646, AT90USB647, AT90USB1286, AT90USB1287, AT90PWM1, AT90PWM2, AT90PWM2B, AT90PWM3, AT90PWM3B, AT90PWM216, AT90PWM316, ATmega165, ATmega165P, ATmega325, ATmega325A, ATmega3250, ATmega325A, ATmega645, ATmega6450, ATmega169, ATmega169P, ATmega329, ATmega329A, ATmega3290, ATmega3290A, ATmega649, ATmega6490, ATmega164P, ATmega324P, ATmega644, ATmega406, ATmega48, ATmega88, ATmega168, ATtiny24, ATtiny44, ATtiny84, ATtiny84A, ATtiny25, ATtiny45, ATtiny85, ATtiny261, ATtiny461, ATtiny861</td>
+   </tr>
+ </table>
+ </center>
+@@ -421,6 +421,7 @@ do { \
+ || defined(__AVR_ATxmega64A1U__) \
+ || defined(__AVR_ATxmega64A3__) \
+ || defined(__AVR_ATxmega64D3__) \
++|| defined(__AVR_ATxmega64D4__) \
+ || defined(__AVR_ATxmega128A1__) \
+ || defined(__AVR_ATxmega128A1U__) \
+ || defined(__AVR_ATxmega128A3__) \
+@@ -506,6 +507,7 @@ do { \
+ #if defined(__AVR_ATxmega16D4__) \
+ || defined(__AVR_ATxmega32D4__) \
+ || defined(__AVR_ATxmega64D3__) \
++|| defined(__AVR_ATxmega64D4__) \
+ || defined(__AVR_ATxmega128D3__) \
+ || defined(__AVR_ATxmega192D3__) 
+ 
+@@ -526,7 +528,7 @@ do { \
+     PR_PRGEN|= (uint8_t)(PR_EBI_bm|PR_RTC_bm|PR_EVSYS_bm|PR_DMA_bm); \
+     PR_PRPA |= (uint8_t)(PR_ADC_bm|PR_AC_bm); \
+     PR_PRPB |= (uint8_t)(PR_ADC_bm|PR_AC_bm); \
+-    PR_PRPC |= (uint8_t)(PR_TWI_bm|R_USART0_bm|PR_SPI_bm|PR_HIRES_bm|PR_TC1_bm|PR_TC0_bm); \
++    PR_PRPC |= (uint8_t)(PR_TWI_bm|PR_USART0_bm|PR_SPI_bm|PR_HIRES_bm|PR_TC1_bm|PR_TC0_bm); \
+     PR_PRPD |= (uint8_t)(PR_TWI_bm|PR_USART0_bm|PR_SPI_bm|PR_HIRES_bm|PR_TC1_bm|PR_TC0_bm); \
+     PR_PRPE |= (uint8_t)(PR_TWI_bm|PR_USART0_bm|PR_SPI_bm|PR_HIRES_bm|PR_TC1_bm|PR_TC0_bm); \
+     PR_PRPF |= (uint8_t)(PR_TWI_bm|PR_USART0_bm|PR_SPI_bm|PR_HIRES_bm|PR_TC1_bm|PR_TC0_bm); \
+
+diff -Naurp include/avr/sleep.h include/avr/sleep.h
+--- include/avr/sleep.h	2011-12-29 00:51:50.000000000 -0800
++++ include/avr/sleep.h	2014-02-10 23:59:00.000000000 -0800
+@@ -434,6 +434,7 @@
+ || defined(__AVR_ATxmega64A1U__) \
+ || defined(__AVR_ATxmega64A3__) \
+ || defined(__AVR_ATxmega64D3__) \
++|| defined(__AVR_ATxmega64D4__) \
+ || defined(__AVR_ATxmega128A1__) \
+ || defined(__AVR_ATxmega128A1U__) \
+ || defined(__AVR_ATxmega128A3__) \
+
+diff -Naurp include/avr/wdt.h include/avr/wdt.h
+--- include/avr/wdt.h	2011-12-29 00:51:50.000000000 -0800
++++ include/avr/wdt.h	2014-02-10 23:59:00.000000000 -0800
+@@ -137,6 +137,7 @@
+ || defined(__AVR_ATxmega64A1U__) \
+ || defined(__AVR_ATxmega64A3__) \
+ || defined(__AVR_ATxmega64D3__) \
++|| defined(__AVR_ATxmega64D4__) \
+ || defined(__AVR_ATxmega128A1__) \
+ || defined(__AVR_ATxmega128A1U__) \
+ || defined(__AVR_ATxmega128A3__) \
+
+diff -Naurp configure configure
+--- configure	2011-12-29 00:52:22.000000000 -0800
++++ configure	2014-02-10 23:59:00.000000000 -0800
+@@ -615,6 +615,8 @@ HAS_avrxmega5_FALSE
+ HAS_avrxmega5_TRUE
+ HAS_atxmega64d3_FALSE
+ HAS_atxmega64d3_TRUE
++HAS_atxmega64d4_FALSE
++HAS_atxmega64d4_TRUE
+ HAS_atxmega64a3_FALSE
+ HAS_atxmega64a3_TRUE
+ HAS_avrxmega4_FALSE
+@@ -10383,6 +10385,42 @@ else
+ fi
+ 
+ 
++    old_CC=${CC}
++    old_CFLAGS=${CFLAGS}
++    CFLAGS="-mmcu=atxmega64d4"
++    CC=`echo "${CC}" | sed 's/-mmcu=avr.//'`
++    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if ${CC} has support for atxmega64d4" >&5
++$as_echo_n "checking if ${CC} has support for atxmega64d4... " >&6; }
++    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++
++_ACEOF
++if ac_fn_c_try_compile "$LINENO"; then :
++  has_dev_support=yes
++else
++  has_dev_support=no
++
++fi
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++    if test "x$has_dev_support" = "xyes"
++    then
++      HAS_atxmega64d4=yes
++    fi
++    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $has_dev_support" >&5
++$as_echo "$has_dev_support" >&6; }
++    CC=${old_CC}
++    CFLAGS=${old_CFLAGS}
++
++
++ if test "x$HAS_atxmega64d4" = "xyes"; then
++  HAS_atxmega64d4_TRUE=
++  HAS_atxmega64d4_FALSE='#'
++else
++  HAS_atxmega64d4_TRUE='#'
++  HAS_atxmega64d4_FALSE=
++fi
++
++
+ 
+ # avrxmega5
+ 
+@@ -11217,7 +11255,7 @@ ac_config_files="$ac_config_files avr/li
+ 
+ 
+ # avrxmega4
+-ac_config_files="$ac_config_files avr/lib/avrxmega4/Makefile avr/lib/avrxmega4/atxmega64a3/Makefile avr/lib/avrxmega4/atxmega64d3/Makefile"
++ac_config_files="$ac_config_files avr/lib/avrxmega4/Makefile avr/lib/avrxmega4/atxmega64a3/Makefile avr/lib/avrxmega4/atxmega64d3/Makefile avr/lib/avrxmega4/atxmega64d4/Makefile"
+ 
+ 
+ # avrxmega5
+@@ -12079,6 +12117,10 @@ if test -z "${HAS_atxmega64d3_TRUE}" && 
+   as_fn_error $? "conditional \"HAS_atxmega64d3\" was never defined.
+ Usually this means the macro was only invoked conditionally." "$LINENO" 5
+ fi
++if test -z "${HAS_atxmega64d4_TRUE}" && test -z "${HAS_atxmega64d4_FALSE}"; then
++  as_fn_error $? "conditional \"HAS_atxmega64d4\" was never defined.
++Usually this means the macro was only invoked conditionally." "$LINENO" 5
++fi
+ if test -z "${HAS_avrxmega5_TRUE}" && test -z "${HAS_avrxmega5_FALSE}"; then
+   as_fn_error $? "conditional \"HAS_avrxmega5\" was never defined.
+ Usually this means the macro was only invoked conditionally." "$LINENO" 5
+@@ -12995,6 +13037,7 @@ do
+     "avr/lib/avrxmega4/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega4/Makefile" ;;
+     "avr/lib/avrxmega4/atxmega64a3/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega4/atxmega64a3/Makefile" ;;
+     "avr/lib/avrxmega4/atxmega64d3/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega4/atxmega64d3/Makefile" ;;
++    "avr/lib/avrxmega4/atxmega64d4/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega4/atxmega64d4/Makefile" ;;
+     "avr/lib/avrxmega5/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega5/Makefile" ;;
+     "avr/lib/avrxmega5/atxmega64a1/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega5/atxmega64a1/Makefile" ;;
+     "avr/lib/avrxmega5/atxmega64a1u/Makefile") CONFIG_FILES="$CONFIG_FILES avr/lib/avrxmega5/atxmega64a1u/Makefile" ;;
+
+diff -Naurp configure.ac configure.ac
+--- configure.ac	2011-12-29 00:51:55.000000000 -0800
++++ configure.ac	2014-02-10 23:59:00.000000000 -0800
+@@ -933,6 +933,9 @@ AM_CONDITIONAL(HAS_atxmega64a3, test "x$
+ CHECK_AVR_DEVICE(atxmega64d3)
+ AM_CONDITIONAL(HAS_atxmega64d3, test "x$HAS_atxmega64d3" = "xyes")
+ 
++CHECK_AVR_DEVICE(atxmega64d4)
++AM_CONDITIONAL(HAS_atxmega64d4, test "x$HAS_atxmega64d4" = "xyes")
++
+ 
+ # avrxmega5
+ CHECK_AVR_DEVICE(avrxmega5)
+@@ -1280,6 +1283,7 @@ AC_CONFIG_FILES([
+ 	avr/lib/avrxmega4/Makefile
+ 	avr/lib/avrxmega4/atxmega64a3/Makefile
+ 	avr/lib/avrxmega4/atxmega64d3/Makefile
++	avr/lib/avrxmega4/atxmega64d4/Makefile
+ ])
+ 
+ # avrxmega5
+

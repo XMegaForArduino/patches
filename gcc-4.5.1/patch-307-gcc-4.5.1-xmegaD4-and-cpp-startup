@@ -1,0 +1,87 @@
+diff -Naurp gcc/config/avr/avr-devices.c gcc/config/avr/avr-devices.c
+--- gcc/config/avr/avr-devices.c	2014-02-10 22:51:04.000000000 -0800
++++ gcc/config/avr/avr-devices.c	2014-02-10 23:00:00.000000000 -0800
+@@ -259,6 +259,7 @@ const struct mcu_type_s avr_mcu_types[] 
+   { "avrxmega4",    ARCH_AVRXMEGA4, NULL,                           0, 0x2000, "x64d3" },
+   { "atxmega64a3",  ARCH_AVRXMEGA4, "__AVR_ATxmega64A3__",          0, 0x2000, "x64a3" },
+   { "atxmega64d3",  ARCH_AVRXMEGA4, "__AVR_ATxmega64D3__",          0, 0x2000, "x64d3" },
++  { "atxmega64d4",  ARCH_AVRXMEGA4, "__AVR_ATxmega64D4__",          0, 0x2000, "x64d4" },
+     /* Xmega, > 64K, <= 128K FLASH, > 64K RAM.  */
+   { "avrxmega5",    ARCH_AVRXMEGA5, NULL,                           0, 0x2000, "x64a1" },
+   { "atxmega64a1",  ARCH_AVRXMEGA5, "__AVR_ATxmega64A1__",          0, 0x2000, "x64a1" },
+
+diff -Naurp gcc/config/avr/t-avr gcc/config/avr/t-avr
+--- gcc/config/avr/t-avr	2014-02-10 22:51:04.000000000 -0800
++++ gcc/config/avr/t-avr	2014-02-10 23:00:00.000000000 -0800
+@@ -273,6 +273,7 @@ MULTILIB_MATCHES = \
+ 	mmcu?avrxmega2=mmcu?atxmega32x1 \
+ 	mmcu?avrxmega4=mmcu?atxmega64a3 \
+ 	mmcu?avrxmega4=mmcu?atxmega64d3 \
++	mmcu?avrxmega4=mmcu?atxmega64d4 \
+ 	mmcu?avrxmega5=mmcu?atxmega64a1 \
+ 	mmcu?avrxmega5=mmcu?atxmega64a1u \
+ 	mmcu?avrxmega6=mmcu?atxmega128a3 \
+
+diff -Naurp gcc/config/avr/libgcc.S gcc/config/avr/libgcc.S
+--- gcc/config/avr/libgcc.S	2014-02-10 22:51:04.000000000 -0800
++++ gcc/config/avr/libgcc.S	2014-02-10 23:00:00.000000000 -0800
+@@ -894,13 +894,31 @@ __do_global_ctors:
+ 	mov_h	r31, r29
+ 	mov_l	r30, r28
+ 	out     __RAMPZ__, r20
++#if defined (__AVR_XMEGA__)
++/* before I go and do this for everyone, make sure it's good on XMEGA  */
++/* but I want to save all affected registers for this loop so ctors    */
++/* do not loop infinitely during application startup.  Saw on xmega D4 */
++  push r17
++  push r16
++  push r28
++  push r29
++  push r20
++#endif // defined (__AVR_XMEGA__)
+ 	XCALL	__tablejump_elpm__
++#if defined (__AVR_XMEGA__)
++/* restore registers pushed in added section above */
++  pop r20
++  pop r29
++  pop r28
++  pop r16
++  pop r17
++#endif // defined (__AVR_XMEGA__)
+ .L__do_global_ctors_start:
+ 	cpi	r28, lo8(__ctors_start)
+ 	cpc	r29, r17
+ 	cpc	r20, r16
+ 	brne	.L__do_global_ctors_loop
+-#else
++#else // no RAMPZ
+ __do_global_ctors:
+ 	ldi	r17, hi8(__ctors_start)
+ 	ldi	r28, lo8(__ctors_end)
+@@ -945,7 +963,25 @@ __do_global_dtors:
+ 	mov_h	r31, r29
+ 	mov_l	r30, r28
+ 	out     __RAMPZ__, r20
++#if defined (__AVR_XMEGA__)
++/* before I go and do this for everyone, make sure it's good on XMEGA  */
++/* but I want to save all affected registers for this loop so ctors    */
++/* do not loop infinitely during application startup.  Saw on xmega D4 */
++  push r17
++  push r16
++  push r28
++  push r29
++  push r20
++#endif // defined (__AVR_XMEGA__)
+ 	XCALL	__tablejump_elpm__
++#if defined (__AVR_XMEGA__)
++/* restore registers pushed in added section above */
++  pop r20
++  pop r29
++  pop r28
++  pop r16
++  pop r17
++#endif // defined (__AVR_XMEGA__)
+ .L__do_global_dtors_start:
+ 	cpi	r28, lo8(__dtors_end)
+ 	cpc	r29, r17
+

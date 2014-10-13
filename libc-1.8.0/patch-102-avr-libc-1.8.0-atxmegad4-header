@@ -1,0 +1,24 @@
+diff -Naurp include/avr/Makefile.in include/avr/Makefile.in
+--- include/avr/Makefile.in	2014-02-10 23:50:00.000000000 -0800
++++ include/avr/Makefile.in	2014-02-10 23:59:00.000000000 -0800
+@@ -382,6 +382,7 @@ avr_HEADERS = \
+     iousb647.h \
+     iousbxx6_7.h \
+     iox64d3.h \
++    iox64d4.h \
+     iox128a1.h \
+     iox128a1u.h \
+     iox128a3.h \
+
+diff -Naurp include/avr/Makefile.in include/avr/Makefile.in
+--- include/avr/Makefile.am	2011-12-29 00:51:50.000000000 -0800
++++ include/avr/Makefile.am	2014-02-10 23:59:00.000000000 -0800
+@@ -191,6 +191,7 @@ avr_HEADERS = \
+     iousb647.h \
+     iousbxx6_7.h \
+     iox64d3.h \
++    iox64d4.h \
+     iox128a1.h \
+     iox128a1u.h \
+     iox128a3.h \
+

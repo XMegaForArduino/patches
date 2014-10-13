@@ -1,0 +1,33 @@
+diff -Naurp gcc/config/avr/avr-devices.c gcc/config/avr/avr-devices.c
+--- gcc/config/avr/avr-devices.c	2014-02-24 15:05:49.000000000 -0800
++++ gcc/config/avr/avr-devices.c	2014-10-11 16:18:07.000000000 -0700
+@@ -249,9 +249,11 @@ const struct mcu_type_s avr_mcu_types[] 
+   { "avrxmega2",    ARCH_AVRXMEGA2, NULL,                           0, 0x2000, "x32a4" },
+   { "atxmega16a4",  ARCH_AVRXMEGA2, "__AVR_ATxmega16A4__",          0, 0x2000, "x16a4" },
+   { "atxmega16d4",  ARCH_AVRXMEGA2, "__AVR_ATxmega16D4__",          0, 0x2000, "x16d4" },
++  { "atxmega16e5",  ARCH_AVRXMEGA2, "__AVR_ATxmega16E5__",          0, 0x2000, "x16e5" },
+   { "atxmega16x1",  ARCH_AVRXMEGA2, "__AVR_ATxmega16X1__",          0, 0x2000, "x16x1" },
+   { "atxmega32a4",  ARCH_AVRXMEGA2, "__AVR_ATxmega32A4__",          0, 0x2000, "x32a4" },
+   { "atxmega32d4",  ARCH_AVRXMEGA2, "__AVR_ATxmega32D4__",          0, 0x2000, "x32d4" },
++  { "atxmega32e5",  ARCH_AVRXMEGA2, "__AVR_ATxmega32E5__",          0, 0x2000, "x32e5" },
+   { "atxmega32x1",  ARCH_AVRXMEGA2, "__AVR_ATxmega32X1__",          0, 0x2000, "x32x1" },
+     /* Xmega, > 8K, <= 64K FLASH, > 64K RAM.  */
+     /* { "avrxmega3",    ARCH_AVRXMEGA3, NULL }, */
+
+diff -Naurp gcc/config/avr/t-avr gcc/config/avr/t-avr
+--- gcc/config/avr/t-avr	2014-02-24 15:05:49.000000000 -0800
++++ gcc/config/avr/t-avr	2014-10-11 16:20:16.000000000 -0700
+@@ -267,9 +267,11 @@ MULTILIB_MATCHES = \
+ 	mmcu?avr6=mmcu?atmega2561 \
+ 	mmcu?avrxmega2=mmcu?atxmega16a4 \
+ 	mmcu?avrxmega2=mmcu?atxmega16d4 \
++	mmcu?avrxmega2=mmcu?atxmega16e5 \
+ 	mmcu?avrxmega2=mmcu?atxmega16x1 \
+ 	mmcu?avrxmega2=mmcu?atxmega32d4 \
+ 	mmcu?avrxmega2=mmcu?atxmega32a4 \
++	mmcu?avrxmega2=mmcu?atxmega32e5 \
+ 	mmcu?avrxmega2=mmcu?atxmega32x1 \
+ 	mmcu?avrxmega4=mmcu?atxmega64a3 \
+ 	mmcu?avrxmega4=mmcu?atxmega64d3 \
+
+
