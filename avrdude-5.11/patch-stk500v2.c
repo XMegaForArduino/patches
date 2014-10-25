@@ -1,5 +1,5 @@
 --- stk500v2.c.orig	2011-08-26 13:22:10.000000000 -0700
-+++ stk500v2.c	2014-10-24 19:52:34.000000000 -0700
++++ stk500v2.c	2014-10-24 20:11:23.000000000 -0700
 @@ -416,19 +416,29 @@
    return rv;
  }
@@ -98,3 +98,77 @@
                "%s: stk500v2_paged_write: write command failed\n",
                progname);
        return -1;
+@@ -1975,11 +2002,12 @@
+ static int stk500v2_paged_load(PROGRAMMER * pgm, AVRPART * p, AVRMEM * m,
+                              int page_size, int n_bytes)
+ {
+   unsigned int addr, block_size, hiaddr, addrshift, use_ext_addr;
+   unsigned char commandbuf[4];
+-  unsigned char buf[275];	// max buffer size for stk500v2 at this point
++//  unsigned char buf[275];	// max buffer size for stk500v2 at this point (BBB - not big enough)
++  unsigned char *buf;
+   unsigned char cmds[4];
+   int result;
+   OPCODE * rop;
+ 
+   DEBUG("STK500V2: stk500v2_paged_load(..,%s,%d,%d)\n",m->desc,page_size,n_bytes);
+@@ -2018,10 +2046,19 @@
+     return -1;
+   }
+   avr_set_bits(rop, cmds);
+   commandbuf[3] = cmds[0];
+ 
++  buf = malloc(sizeof(commandbuf) + page_size + 266); // BBB - malloc'd buffer with min size similar to before
++  if(!buf)
++  {
++      fprintf(stderr,
++              "%s: stk500v2_paged_load: not enough memory for buffer\n",
++              progname);
++      return -1;
++  }
++
+   for (addr=0; addr < n_bytes; addr += page_size) {
+     report_progress(addr, n_bytes,NULL);
+ 
+     if ((n_bytes-addr) < page_size)
+       block_size = n_bytes - addr;
+@@ -2037,30 +2075,38 @@
+     // Ensure a new "load extended address" will be issued
+     // when crossing a 64 KB boundary in flash.
+     if (hiaddr != (addr & ~0xFFFF)) {
+       hiaddr = addr & ~0xFFFF;
+       if (stk500v2_loadaddr(pgm, use_ext_addr | (addr >> addrshift)) < 0)
++      {
++        free(buf); // BBB - must free buffer
+         return -1;
+     }
++    }
+ 
+-    result = stk500v2_command(pgm,buf,4,sizeof(buf));
++    result = stk500v2_command(pgm,buf,4,/*sizeof(buf)*/sizeof(commandbuf) + page_size + 266); // BBB - correct buffer size specified
+     if (result < 0) {
+       fprintf(stderr,
+               "%s: stk500v2_paged_load: read command failed\n",
+               progname);
++      {
++        free(buf); // BBB - must free buffer
+       return -1;
+     }
++    }
+ #if 0
+     for (i=0;i<page_size;i++) {
+       fprintf(stderr,"%02X",buf[2+i]);
+       if (i%16 == 15) fprintf(stderr,"\n");
+     }
+ #endif
+ 
+     memcpy(&m->buf[addr], &buf[2], block_size);
+   }
+ 
++  free(buf); // now I can free it as I'm done with it
++
+   return n_bytes;
+ }
+ 
+ 
+ /*
