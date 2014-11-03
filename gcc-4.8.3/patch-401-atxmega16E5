@@ -1,0 +1,274 @@
+--- gcc/config/avr/avr-mcus.def	2014-11-02 12:52:55.000000000 -0800
++++ gcc/config/avr/avr-mcus.def	2014-11-02 13:03:58.000000000 -0800
+@@ -263,13 +263,14 @@
+ AVR_MCU ("atmega2564rfr2",       ARCH_AVR6, "__AVR_ATmega2564RFR2__",    0, 0, 0x0200, 4, "m2564rfr2")
+ /* Xmega, 16K <= Flash < 64K, RAM <= 64K */
+ AVR_MCU ("avrxmega2",        ARCH_AVRXMEGA2, NULL,                       0, 0, 0x2000, 1, "x32a4")
+ AVR_MCU ("atxmega16a4",      ARCH_AVRXMEGA2, "__AVR_ATxmega16A4__",      0, 0, 0x2000, 1, "x16a4")
+ AVR_MCU ("atxmega16d4",      ARCH_AVRXMEGA2, "__AVR_ATxmega16D4__",      0, 0, 0x2000, 1, "x16d4")
++AVR_MCU ("atxmega16e5",      ARCH_AVRXMEGA2, "__AVR_ATxmega16E5__",      0, 0, 0x2000, 1, "x16e5")
+ AVR_MCU ("atxmega16x1",      ARCH_AVRXMEGA2, "__AVR_ATxmega16X1__",      0, 0, 0x2000, 1, "x16x1")
+ AVR_MCU ("atxmega32a4",      ARCH_AVRXMEGA2, "__AVR_ATxmega32A4__",      0, 0, 0x2000, 1, "x32a4")
+ AVR_MCU ("atxmega32d4",      ARCH_AVRXMEGA2, "__AVR_ATxmega32D4__",      0, 0, 0x2000, 1, "x32d4")
+ AVR_MCU ("atxmega32x1",      ARCH_AVRXMEGA2, "__AVR_ATxmega32X1__",      0, 0, 0x2000, 1, "x32x1")
+ AVR_MCU ("atmxt112sl",       ARCH_AVRXMEGA2, "__AVR_ATMXT112SL__",       0, 0, 0x2000, 1, "mxt112sl")
+ AVR_MCU ("atmxt224",         ARCH_AVRXMEGA2, "__AVR_ATMXT224__",         0, 0, 0x2000, 1, "mxt224")
+ AVR_MCU ("atmxt224e",        ARCH_AVRXMEGA2, "__AVR_ATMXT224E__",        0, 0, 0x2000, 1, "mxt224e")
+ AVR_MCU ("atmxt336s",        ARCH_AVRXMEGA2, "__AVR_ATMXT336S__",        0, 0, 0x2000, 1, "mxt336s")
+
+
+--- gcc/config/avr/avr-tables.opt	2014-11-02 13:55:25.000000000 -0800
++++ gcc/config/avr/avr-tables.opt	2014-11-02 13:58:38.000000000 -0800
+@@ -610,175 +610,178 @@
+ 
+ EnumValue
+ Enum(avr_mcu) String(atxmega16d4) Value(195)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega16x1) Value(196)
++Enum(avr_mcu) String(atxmega16e5) Value(196)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega32a4) Value(197)
++Enum(avr_mcu) String(atxmega16x1) Value(197)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega32d4) Value(198)
++Enum(avr_mcu) String(atxmega32a4) Value(198)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega32x1) Value(199)
++Enum(avr_mcu) String(atxmega32d4) Value(199)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atmxt112sl) Value(200)
++Enum(avr_mcu) String(atxmega32x1) Value(200)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atmxt224) Value(201)
++Enum(avr_mcu) String(atmxt112sl) Value(201)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atmxt224e) Value(202)
++Enum(avr_mcu) String(atmxt224) Value(202)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atmxt336s) Value(203)
++Enum(avr_mcu) String(atmxt224e) Value(203)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega16a4u) Value(204)
++Enum(avr_mcu) String(atmxt336s) Value(204)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega16c4) Value(205)
++Enum(avr_mcu) String(atxmega16a4u) Value(205)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega32a4u) Value(206)
++Enum(avr_mcu) String(atxmega16c4) Value(206)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega32c4) Value(207)
++Enum(avr_mcu) String(atxmega32a4u) Value(207)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega32e5) Value(208)
++Enum(avr_mcu) String(atxmega32c4) Value(208)
+ 
+ EnumValue
+-Enum(avr_mcu) String(avrxmega4) Value(209)
++Enum(avr_mcu) String(atxmega32e5) Value(209)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64a3) Value(210)
++Enum(avr_mcu) String(avrxmega4) Value(210)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64d3) Value(211)
++Enum(avr_mcu) String(atxmega64a3) Value(211)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64a3u) Value(212)
++Enum(avr_mcu) String(atxmega64d3) Value(212)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64a4u) Value(213)
++Enum(avr_mcu) String(atxmega64a3u) Value(213)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64b1) Value(214)
++Enum(avr_mcu) String(atxmega64a4u) Value(214)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64b3) Value(215)
++Enum(avr_mcu) String(atxmega64b1) Value(215)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64c3) Value(216)
++Enum(avr_mcu) String(atxmega64b3) Value(216)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64d4) Value(217)
++Enum(avr_mcu) String(atxmega64c3) Value(217)
+ 
+ EnumValue
+-Enum(avr_mcu) String(avrxmega5) Value(218)
++Enum(avr_mcu) String(atxmega64d4) Value(218)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64a1) Value(219)
++Enum(avr_mcu) String(avrxmega5) Value(219)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega64a1u) Value(220)
++Enum(avr_mcu) String(atxmega64a1) Value(220)
+ 
+ EnumValue
+-Enum(avr_mcu) String(avrxmega6) Value(221)
++Enum(avr_mcu) String(atxmega64a1u) Value(221)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128a3) Value(222)
++Enum(avr_mcu) String(avrxmega6) Value(222)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128d3) Value(223)
++Enum(avr_mcu) String(atxmega128a3) Value(223)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega192a3) Value(224)
++Enum(avr_mcu) String(atxmega128d3) Value(224)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega192d3) Value(225)
++Enum(avr_mcu) String(atxmega192a3) Value(225)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega256a3) Value(226)
++Enum(avr_mcu) String(atxmega192d3) Value(226)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega256a3b) Value(227)
++Enum(avr_mcu) String(atxmega256a3) Value(227)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega256a3bu) Value(228)
++Enum(avr_mcu) String(atxmega256a3b) Value(228)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega256d3) Value(229)
++Enum(avr_mcu) String(atxmega256a3bu) Value(229)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128a3u) Value(230)
++Enum(avr_mcu) String(atxmega256d3) Value(230)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128b1) Value(231)
++Enum(avr_mcu) String(atxmega128a3u) Value(231)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128b3) Value(232)
++Enum(avr_mcu) String(atxmega128b1) Value(232)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128c3) Value(233)
++Enum(avr_mcu) String(atxmega128b3) Value(233)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128d4) Value(234)
++Enum(avr_mcu) String(atxmega128c3) Value(234)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atmxt540s) Value(235)
++Enum(avr_mcu) String(atxmega128d4) Value(235)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atmxt540sreva) Value(236)
++Enum(avr_mcu) String(atmxt540s) Value(236)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega192a3u) Value(237)
++Enum(avr_mcu) String(atmxt540sreva) Value(237)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega192c3) Value(238)
++Enum(avr_mcu) String(atxmega192a3u) Value(238)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega256a3u) Value(239)
++Enum(avr_mcu) String(atxmega192c3) Value(239)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega256c3) Value(240)
++Enum(avr_mcu) String(atxmega256a3u) Value(240)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega384c3) Value(241)
++Enum(avr_mcu) String(atxmega256c3) Value(241)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega384d3) Value(242)
++Enum(avr_mcu) String(atxmega384c3) Value(242)
+ 
+ EnumValue
+-Enum(avr_mcu) String(avrxmega7) Value(243)
++Enum(avr_mcu) String(atxmega384d3) Value(243)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128a1) Value(244)
++Enum(avr_mcu) String(avrxmega7) Value(244)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128a1u) Value(245)
++Enum(avr_mcu) String(atxmega128a1) Value(245)
+ 
+ EnumValue
+-Enum(avr_mcu) String(atxmega128a4u) Value(246)
++Enum(avr_mcu) String(atxmega128a1u) Value(246)
+ 
+ EnumValue
+-Enum(avr_mcu) String(avr1) Value(247)
++Enum(avr_mcu) String(atxmega128a4u) Value(247)
+ 
+ EnumValue
+-Enum(avr_mcu) String(at90s1200) Value(248)
++Enum(avr_mcu) String(avr1) Value(248)
+ 
+ EnumValue
+-Enum(avr_mcu) String(attiny11) Value(249)
++Enum(avr_mcu) String(at90s1200) Value(249)
+ 
+ EnumValue
+-Enum(avr_mcu) String(attiny12) Value(250)
++Enum(avr_mcu) String(attiny11) Value(250)
+ 
+ EnumValue
+-Enum(avr_mcu) String(attiny15) Value(251)
++Enum(avr_mcu) String(attiny12) Value(251)
+ 
+ EnumValue
+-Enum(avr_mcu) String(attiny28) Value(252)
++Enum(avr_mcu) String(attiny15) Value(252)
++
++EnumValue
++Enum(avr_mcu) String(attiny28) Value(253)
+ 
+--- gcc/config/avr/t-multilib	2014-11-02 12:52:55.000000000 -0800
++++ gcc/config/avr/t-multilib	2014-11-02 13:08:37.000000000 -0800
+@@ -224,13 +224,14 @@
+ 	mmcu?avr6=mmcu?atmega2561 \
+ 	mmcu?avr6=mmcu?atmega256rfr2 \
+ 	mmcu?avr6=mmcu?atmega2564rfr2 \
+ 	mmcu?avrxmega2=mmcu?atxmega16a4 \
+ 	mmcu?avrxmega2=mmcu?atxmega16d4 \
++	mmcu?avrxmega2=mmcu?atxmega16e5 \
+ 	mmcu?avrxmega2=mmcu?atxmega16x1 \
+ 	mmcu?avrxmega2=mmcu?atxmega32a4 \
+ 	mmcu?avrxmega2=mmcu?atxmega32d4 \
+ 	mmcu?avrxmega2=mmcu?atxmega32x1 \
+ 	mmcu?avrxmega2=mmcu?atmxt112sl \
+ 	mmcu?avrxmega2=mmcu?atmxt224 \
+ 	mmcu?avrxmega2=mmcu?atmxt224e \
+ 	mmcu?avrxmega2=mmcu?atmxt336s \
