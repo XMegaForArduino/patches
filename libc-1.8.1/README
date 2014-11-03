@@ -1,0 +1,9 @@
+These patches are for avr-libc 1.8.1
+
+You should be able to download the source with the following URL:
+http://nongnu.askapache.com/avr-libc/avr-libc-1.8.1.tar.bz2
+
+Apply the patches from within the avr-libc-1.8.1 directory.
+
+You should build avr-binutils, then avr-gcc, then avr-libc (in that order)
+

@@ -1,0 +1,12 @@
+These patches are for gcc 4.8.3
+
+You should be able to obtain the source files via the following URL:
+
+http://mirrors.kernel.org/sources.redhat.com/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.bz2
+
+
+Apply the patches from the gcc-4.8.3 directory.
+
+
+You will also need to install 'avr-binutils' before compiling avr-gcc
+

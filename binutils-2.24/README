@@ -1,0 +1,11 @@
+These patches apply to binutils 2.24
+
+You should be able to obtain the source files via the following URL
+
+http://mirrors.kernel.org/sources.redhat.com/binutils/releases/binutils-2.24.tar.bz2
+
+Apply patches from the binutils-2.24 directory.
+
+
+You should build/install this first, before other avr compiler/tool packages.
+
