@@ -47,19 +47,31 @@ also, I specifically remember THESE packages needed to be installed:
 
 autoconf
 automake
+bison
 gettext
-flacc
+expect
+flex
+gamin
+gmp
+isl
 libCLooG
-libusb
-libusb1
+libusb0
+libusb1.0
+tcl
+tcl-tk
+texinfo
+xz
 
 You must include the '-devel' versions, which will have the correct header
 files and libraries installed in the right places.  OK I agree that Cygwin's
 package manager is a bit kludgy, but if you use the filtering feature you
 can do it 'somewhat easily'.
 
-(I will update this short-list as I verify needed packages)
+I will update this short-list as I verify needed packages.  It is by no means
+a complete list, nor is it ALL necessarily required for success.  It is what
+I remember 'trial installing' to get the build to work.
 
 
-FYI the program that generates the package list is 'cygwin.pkglist.sh'
+FYI the program that generates the package list is 'cygwin.pkglist.sh'.  I
+noticed a few packages aren't there for some reason.  So it's not perfect.
 
