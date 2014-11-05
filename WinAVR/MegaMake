@@ -1,0 +1,99 @@
+#
+# Make file for updated WinAVR
+
+
+
+LOCALBASE=/usr/local
+PREFIX=/usr/local
+
+
+all:	binutils gcc libc avrdude
+
+
+
+clean:
+	$(MAKE) -C avr-gcc/work/gcc-4.8.3 clean
+	$(MAKE) -C avr-binutils/work/avr-binutils-2.24 clean
+	$(MAKE) -C avr-libc/work/avrlibc-1.8.1 clean
+	$(MAKE) -C avrdude/work/avrdude-6.1 clean
+
+
+gcc-configure:	avr-gcc/work/.configured
+
+
+# these are the options that WinAVR had listed for avr-gcc
+# --enable-win32-registry=WinAVR-20100110 --with-gmp=/usr/local --with-mpfr=/usr/local --prefix=/c/WinAVR
+# --target=avr --enable-languages=c,c++,objc --with-dwarf2 --enable-doc --disable-shared --disable-libada
+# --disable-libssp --disable-nls --with-pkgversion='WinAVR 20100110' 
+# --with-bugurl='URL:http://sourceforge.net/tracker/?atid=520074&group_id=68108&func=browse'
+
+
+avr-gcc/work/.configured:
+	cd avr-gcc/work/gcc-4.8.3 ; \
+	./configure  --target=avr --disable-libssp --with-gmp=${LOCALBASE} --enable-languages="c c++" \
+	--with-cloog-include=/usr/include/cloog-isl --with-cloog-libs=/usr/lib
+#	--enable-libatomic --enable-libitm --enable-libsanitizer
+#	--without-libmudflap --without-libgomp --without-libatomic --without-libitm --without-libsanitizer \
+#	--without-libquadmath --without-libssp --without-libstdc++-v3 --without-gnattools --without-libada \
+#	--without-libgfortran --without-libgo --without-libffi --without-libbacktrace --without-zlib \
+#	--without-libjava --without-libobjc --without-boehm-gc
+	touch avr-gcc/work/.configured
+
+
+binutils-configure:	avr-binutils/work/.configured
+
+avr-binutils/work/.configured:
+	cd avr-binutils/work/binutils-2.24 ; \
+	./configure --target=avr --disable-werror --disable-nls
+	touch avr-binutils/work/.configured
+
+
+libc-configure:	avr-libc/work/.configured
+
+avr-libc/work/.configured:
+	cd avr-libc/work/avr-libc-1.8.1 ; \
+	./configure --build=`./config.guess` --host=avr --prefix=${PREFIX}
+	touch avr-libc/work/.configured
+
+
+avrdude-configure:	avrdude/work/.configured
+
+avrdude/work/.configured:
+	cd avrdude/work/avrdude-6.1 ; \
+	./configure
+	touch avrdude/work/.configured
+
+
+binutils:	binutils-configure avr-binutils/work/.built
+
+avr-binutils/work/.built:
+	$(MAKE) -C avr-binutils/work/binutils-2.24
+	$(MAKE) -C avr-binutils/work/binutils-2.24 install 
+	touch avr-binutils/work/.built
+
+
+gcc:	binutils gcc-configure avr-gcc/work/.built
+
+avr-gcc/work/.built:
+	$(MAKE) -C avr-gcc/work/gcc-4.8.3
+	$(MAKE) -C avr-gcc/work/gcc-4.8.3 install
+	touch avr-gcc/work/.built
+
+
+libc:	gcc libc-configure avr-libc/work/.built
+
+avr-libc/work/.built:
+	$(MAKE) -C avr-libc/work/avr-libc-1.8.1 
+	$(MAKE) -C avr-libc/work/avr-libc-1.8.1 install
+	touch avr-libc/work/.built
+
+
+avrdude:	avrdude-configure avrdude/work/.built
+
+avrdude/work/.built:
+	$(MAKE) -C avrdude/work/avrdude-6.1
+	touch avrdude/work/.built
+
+
+
+

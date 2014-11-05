@@ -1,0 +1,64 @@
+--- configure.ac.orig	2014-03-12 16:03:19.000000000 -0700
++++ configure.ac	2014-11-04 08:00:13.670898400 -0800
+@@ -103,11 +103,11 @@
+    case $target in
+        *-*-darwin*)
+                LIBUSB="-lusb -framework CoreFoundation -framework IOKit"
+                ;;
+        *)
+-               LIBUSB="-lusb"
++               LIBUSB="-lusb.dll"
+                ;;
+    esac
+    AC_DEFINE([HAVE_LIBUSB])
+    AC_CHECK_HEADERS([usb.h])
+    AC_CHECK_HEADERS([lusb0_usb.h])
+@@ -121,11 +121,11 @@
+    case $target in
+        *-*-darwin*)
+                LIBUSB_1_0="-lusb-1.0 -framework CoreFoundation -framework IOKit"
+                ;;
+        *)
+-               LIBUSB_1_0="-lusb-1.0"
++               LIBUSB_1_0="-lusb-1.0.dll"
+                ;;
+    esac
+    AC_DEFINE([HAVE_LIBUSB_1_0])
+    AC_CHECK_HEADERS([libusb-1.0/libusb.h])
+    AC_CHECK_HEADERS([libusb.h])
+@@ -142,11 +142,11 @@
+                # at all so probing will fail but we do not have to
+                # special-case that.
+                LIBUSB_1_0="-lusb"
+                ;;
+        *)
+-               LIBUSB_1_0="-lusb-1.0"
++               LIBUSB_1_0="-lusb-1.0.dll"
+                ;;
+    esac
+    AC_DEFINE([HAVE_LIBUSB_1_0])
+    AC_CHECK_HEADERS([libusb.h])
+ fi
+@@ -155,19 +155,19 @@
+             [Define if FTDI support is enabled via libftdi1])
+ AH_TEMPLATE([HAVE_LIBFTDI],
+             [Define if FTDI support is enabled via libftdi])
+ AH_TEMPLATE([HAVE_LIBFTDI_TYPE_232H],
+             [Define if libftdi supports FT232H, libftdi version >= 0.20])
+-AC_CHECK_LIB([ftdi1], [ftdi_new], [have_libftdi1=yes], [], [-lusb-1.0])
+-AC_CHECK_LIB([ftdi], [ftdi_usb_get_strings], [have_libftdi=yes], [], [-lusb])
++AC_CHECK_LIB([ftdi1], [ftdi_new], [have_libftdi1=yes], [], [-lusb-1.0.dll])
++AC_CHECK_LIB([ftdi], [ftdi_usb_get_strings], [have_libftdi=yes], [], [-lusb.dll])
+ if test x$have_libftdi1 = xyes; then
+    LIBFTDI1="-lftdi1"
+    AC_DEFINE([HAVE_LIBFTDI1])
+    AC_SUBST(LIBFTDI1, $LIBFTDI1)
+ else
+    if test x$have_libftdi = xyes; then
+-      LIBFTDI="-lftdi -lusb"
++      LIBFTDI="-lftdi -lusb.dll"
+       AC_DEFINE([HAVE_LIBFTDI])
+       AC_SUBST(LIBFTDI, $LIBFTDI)
+       AC_CHECK_DECL(TYPE_232H,[have_libftdi_FT232H=yes], [], [[#include <ftdi.h>]])
+       if test x$have_libftdi_FT232H = xyes; then
+          AC_DEFINE([HAVE_LIBFTDI_TYPE_232H])

@@ -1,0 +1,65 @@
+This is the root 'project' directory for the WinAVR update.
+
+Generally, this should not be attempted unless you know what you are doing.
+Because the build requires 'make install', you will need to make sure you
+have write privileges on the /usr/local directory (where installed files will
+end up).  It is necessary to INSTALL avr-binutils, then avr-gcc, in order to
+build the 'avr-libc' tree, and in that order.
+
+If you want to build yourself, you will need to fetch the following files
+and put them here:
+
+  binutils-2.24.tar.bz2
+  gcc-4.8.3.tar.bz2
+  avr-libc-1.8.1.tar.bz2
+  avrdude-6.1.tar.gz
+
+
+These files can (currently) be obtained from:
+
+  http://mirrors.kernel.org/sources.redhat.com/binutils/releases/binutils-2.24.tar.bz2
+
+  http://mirrors.kernel.org/sources.redhat.com/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.bz2
+
+  http://nongnu.askapache.com/avr-libc/avr-libc-1.8.1.tar.bz2
+
+  http://download.savannah.gnu.org/releases/avrdude/avrdude-6.1.tar.gz
+
+
+Then, run 'megamake.sh' under cygwin, from this directory.  It should apply
+patches and then build/install everything into /usr/local .
+
+(from there you can copy files into the installer tree, TBD)
+
+
+
+REQUIRED CYGWIN PACKAGES
+-------------------------
+
+A few packages are absolutely necessary to successfully build everything.
+If they are missing, you'll typically get 'configure' script errors.
+
+I do NOT have a proper list.  However, I can at least include a list of the
+packages I currently have installed that resulted in a successful build.
+These were saved in cygwin.pkglist.txt .
+
+also, I specifically remember THESE packages needed to be installed:
+
+autoconf
+automake
+gettext
+flacc
+libCLooG
+libusb
+libusb1
+
+You must include the '-devel' versions, which will have the correct header
+files and libraries installed in the right places.  OK I agree that Cygwin's
+package manager is a bit kludgy, but if you use the filtering feature you
+can do it 'somewhat easily'.
+
+(I will update this short-list as I verify needed packages)
+
+
+FYI the program that generates the package list is 'cygwin.pkglist.sh'
+

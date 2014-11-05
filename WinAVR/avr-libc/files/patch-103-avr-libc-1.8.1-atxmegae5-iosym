@@ -1,0 +1,84 @@
+--- crt1/iosym/Makefile.in	2014-08-12 12:09:01.000000000 -0700
++++ crt1/iosym/Makefile.in	2014-11-03 04:25:01.000000000 -0800
+@@ -460,10 +460,11 @@
+ 	atxmega128d4.S \
+ 	atxmega16a4.S \
+ 	atxmega16a4u.S \
+ 	atxmega16c4.S \
+ 	atxmega16d4.S \
++	atxmega16e5.S \
+ 	atxmega192a3.S \
+ 	atxmega192a3u.S \
+ 	atxmega192c3.S \
+ 	atxmega192d3.S \
+ 	atxmega256a3.S \
+@@ -474,10 +475,11 @@
+ 	atxmega256d3.S \
+ 	atxmega32a4.S \
+ 	atxmega32a4u.S \
+ 	atxmega32c4.S \
+ 	atxmega32d4.S \
++	atxmega32e5.S \
+ 	atxmega384c3.S \
+ 	atxmega384d3.S \
+ 	atxmega64a1.S \
+ 	atxmega64a1u.S \
+ 	atxmega64a3.S \
+
+--- crt1/iosym/Makefile.am	2014-08-12 12:06:17.000000000 -0700
++++ crt1/iosym/Makefile.am	2014-11-03 04:24:33.000000000 -0800
+@@ -231,10 +231,11 @@
+ 	atxmega128d4.S \
+ 	atxmega16a4.S \
+ 	atxmega16a4u.S \
+ 	atxmega16c4.S \
+ 	atxmega16d4.S \
++	atxmega16e5.S \
+ 	atxmega192a3.S \
+ 	atxmega192a3u.S \
+ 	atxmega192c3.S \
+ 	atxmega192d3.S \
+ 	atxmega256a3.S \
+@@ -245,10 +246,11 @@
+ 	atxmega256d3.S \
+ 	atxmega32a4.S \
+ 	atxmega32a4u.S \
+ 	atxmega32c4.S \
+ 	atxmega32d4.S \
++	atxmega32e5.S \
+ 	atxmega384c3.S \
+ 	atxmega384d3.S \
+ 	atxmega64a1.S \
+ 	atxmega64a1u.S \
+ 	atxmega64a3.S \
+
+--- /dev/null	2014-11-03 05:22:00.000000000 -0800
++++ crt1/iosym/atxmega16e5.S	2014-11-03 05:21:46.000000000 -0800
+@@ -0,0 +1,11 @@
++/*
++ * This is an empty template file.  Copy this file into
++ * crt1/iosym/$device.S if there is no actual IO symbol
++ * definition file available.
++ *
++ * Normally, IO symbol definition files should be obtained
++ * by applying devtools/ioreg.pl on the respective Atmel XML
++ * file.
++ */
++
++/* $Id: template.S 2376 2013-04-30 14:49:25Z joerg_wunsch $ */
+
+--- /dev/null	2014-11-03 05:22:00.000000000 -0800
++++ crt1/iosym/atxmega32e5.S	2014-11-03 05:21:49.000000000 -0800
+@@ -0,0 +1,11 @@
++/*
++ * This is an empty template file.  Copy this file into
++ * crt1/iosym/$device.S if there is no actual IO symbol
++ * definition file available.
++ *
++ * Normally, IO symbol definition files should be obtained
++ * by applying devtools/ioreg.pl on the respective Atmel XML
++ * file.
++ */
++
++/* $Id: template.S 2376 2013-04-30 14:49:25Z joerg_wunsch $ */
+
