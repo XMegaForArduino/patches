@@ -48,15 +48,20 @@ also, I specifically remember THESE packages needed to be installed:
 autoconf
 automake
 bison
-gettext
 expect
 flex
 gamin
+gcc (and related)
+gettext
 gmp
 isl
 libCLooG
 libusb0
 libusb1.0
+make  (and related)
+mpc
+mpfr
+perl
 tcl
 tcl-tk
 texinfo
