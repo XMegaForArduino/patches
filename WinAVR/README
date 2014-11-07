@@ -61,6 +61,7 @@ libusb1.0
 make  (and related)
 mpc
 mpfr
+patch
 perl
 tcl
 tcl-tk
