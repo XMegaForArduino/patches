@@ -281,7 +281,7 @@
  AM_CONDITIONAL(HAS_atxmega16d4, test "x$HAS_atxmega16d4" = "xyes")
  
 +CHECK_AVR_DEVICE(atxmega16e5)
-+AM_CONDITIONAL(HAS_atxmega16e5, test "x$HAS_atxmega16d5" = "xyes")
++AM_CONDITIONAL(HAS_atxmega16e5, test "x$HAS_atxmega16e5" = "xyes")
 +
  CHECK_AVR_DEVICE(atxmega32a4)
  AM_CONDITIONAL(HAS_atxmega32a4, test "x$HAS_atxmega32a4" = "xyes")
