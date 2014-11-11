@@ -92,6 +92,7 @@ avrdude:	avrdude-configure avrdude/work/.built
 
 avrdude/work/.built:
 	$(MAKE) -C avrdude/work/avrdude-6.1
+	$(MAKE) -C avrdude/work/avrdude-6.1 install
 	touch avrdude/work/.built
 
 
