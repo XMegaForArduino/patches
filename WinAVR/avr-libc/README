@@ -1,1 +1,21 @@
-directory tree for avr-libc
+This directory contains patch and license-related files for the 'avr-libc'
+project, provided by the 'XMega For Arduino' project, intended to be built
+under an environment such as Cygwin (http://cygwin.com/).
+
+The 'avr-libc' project is licensed under a Modified BSD License
+
+The text of the license is in 'LICENSING'.
+
+The source for 'avr-libc' can be obtained here:
+  http://nongnu.askapache.com/avr-libc/avr-libc-1.8.1.tar.bz2
+
+The patch files for this source are in 'files'.
+
+The text of the original 'README' has been included here, for reference.
+
+
+** ORIGINAL README BEGINS HERE **
+
+This is the standard library for Atmel AVR devices together with the
+AVR-GCC compiler.
+

@@ -1,1 +1,51 @@
-directory tree for avr-gcc
+This directory contains patch and license-related files for the 'gcc'
+project, provided by the 'XMega For Arduino' project, intended to be built
+under an environment such as Cygwin (http://cygwin.com/).
+
+The 'gcc' project is licensed under the [L]GPLv3, with a 'runtime license
+exception' for binaries compiled under the license terms. In general
+this means that the source must be made available if you distribute gcc in
+binary form, but you can compile your own project with gcc and not have it
+fall under the GPLv3 requirements.
+
+The license text is in the following files:
+  COPYING              GPLv2
+  COPYING.LIBRARIES    LGPLv2
+  COPYING3             GPLv3
+  COPYING3.LIBRARIES   LGPLv3
+  COPYING.RUNTIME      Run-time exception for GPLv3
+
+Also, see http://www.gnu.org/licenses/ for more information.
+
+The source for 'gcc' can be obtained here:
+  http://mirrors.kernel.org/sources.redhat.com/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.bz2
+
+The patch files for this source are in 'files'.
+
+The text of the original 'README' has been included here, for reference.
+
+
+** ORIGINAL README BEGINS HERE **
+
+This directory contains the GNU Compiler Collection (GCC).
+
+The GNU Compiler Collection is free software.  See the files whose
+names start with COPYING for copying permission.  The manuals, and
+some of the runtime libraries, are under different terms; see the
+individual source files for details.
+
+The directory INSTALL contains copies of the installation information
+as HTML and plain text.  The source of this information is
+gcc/doc/install.texi.  The installation information includes details
+of what is included in the GCC sources and what files GCC installs.
+
+See the file gcc/doc/gcc.texi (together with other files that it
+includes) for usage and porting information.  An online readable
+version of the manual is in the files gcc/doc/gcc.info*.
+
+See http://gcc.gnu.org/bugs/ for how to report bugs usefully.
+
+Copyright years on GCC source files may be listed using range
+notation, e.g., 1987-2012, indicating that every year in the range,
+inclusive, is a copyrightable year that could otherwise be listed
+individually.
