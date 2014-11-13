@@ -4,7 +4,7 @@ under an environment such as Cygwin (http://cygwin.com/).
 
 The 'avr-libc' project is licensed under a Modified BSD License
 
-The text of the license is in 'LICENSING'.
+The text of the license is in 'LICENSE'.
 
 The source for 'avr-libc' can be obtained here:
   http://nongnu.askapache.com/avr-libc/avr-libc-1.8.1.tar.bz2
