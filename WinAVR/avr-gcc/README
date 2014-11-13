@@ -9,11 +9,11 @@ binary form, but you can compile your own project with gcc and not have it
 fall under the GPLv3 requirements.
 
 The license text is in the following files:
-  COPYING              GPLv2
-  COPYING.LIBRARIES    LGPLv2
-  COPYING3             GPLv3
-  COPYING3.LIBRARIES   LGPLv3
-  COPYING.RUNTIME      Run-time exception for GPLv3
+  COPYING            GPLv2
+  COPYING.LIB        LGPLv2
+  COPYING3           GPLv3
+  COPYING3.LIB       LGPLv3
+  COPYING.RUNTIME    Run-time exception for GPLv3
 
 Also, see http://www.gnu.org/licenses/ for more information.
 
