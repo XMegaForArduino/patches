@@ -3,6 +3,16 @@
 echo "This will build apply patches, then build binutils, gcc, libc"
 echo "for the avr platform, to run under cygwin."
 echo ""
+echo "Please review the 'README' files in each of the following directories:"
+echo ""
+echo "  avr-binutils  avr-gcc  avr-libc  avrdude"
+echo ""
+echo "The README file describes the license requirements for the appropriate"
+echo "software.  Most are covered by one or more versions of the GPL.  The"
+echo "actual text of the license is also included in separate files."
+echo ""
+echo "Please do not proceed unless you agree with the license terms."
+echo ""
 
 read -n 1 -p "Enter Y to continue, anything else to quit: " YN
 
