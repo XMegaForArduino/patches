@@ -8,10 +8,10 @@ this means that the source must be made available if you distribute it in
 binary form.
 
 The license text is in the following files:
-  COPYING              GPLv2
-  COPYING.LIBRARIES    LGPLv2
-  COPYING3             GPLv3
-  COPYING3.LIBRARIES   LGPLv3
+  COPYING        GPLv2
+  COPYING.LIB    LGPLv2
+  COPYING3       GPLv3
+  COPYING3.LIB   LGPLv3
 
 Also, see http://www.gnu.org/licenses/ for more information.
 
