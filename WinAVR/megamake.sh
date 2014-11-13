@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo "This will build apply patches, then build binutils, gcc, libc"
-echo "for the avr platform, to run under cygwin."
+echo "This will extract, apply patches, then build binutils, gcc, libc"
+echo "for the avr platform, as well as avrdude, to run under cygwin."
 echo ""
 echo "Please review the 'README' files in each of the following directories:"
 echo ""
